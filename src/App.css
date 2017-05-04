@@ -1,0 +1,31 @@
+.BandList{
+  margin-left: -14px;
+}
+
+.Band{
+  margin: 4px 0 4px 0;
+  font-size:14px;
+  width:300px;
+  border: dashed 1px #ccc;
+  padding: 2px 6px;
+}
+
+.Bands UL {
+  list-style-type:none;
+  padding: 0;
+  margin: 0;
+
+}
+
+.Bands .input-group-addon {
+  padding: 6px 6px 6px 12px;
+}
+
+.form-horizontal{
+  width:300px; 
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
