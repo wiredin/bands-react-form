@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 
 const Header = ({number}) => {
-  console.log(number==0)
   let title = null;
-  if (number==0) {
+  if (number===0) {
     title = <h4> Headliner </h4>;
   }else{
     title = <h4>Band #{number+1}</h4>;
@@ -16,7 +16,7 @@ const Header = ({number}) => {
 
 }
 
-const Band = ({band}) => {
+const Band = SortableElement(({band}) => {
   return (
       <div className="Band">
         <ul>
@@ -27,14 +27,14 @@ const Band = ({band}) => {
         </ul>
       </div>
   );
-}
+});
 
-const BandList = ({bands}) => {
+const BandList = SortableContainer(({bands}) => {
   const bandListNode =  bands.map((band, i) => {
-    return (<div><Header number={i} /> <Band band={band} /></div>)
+    return ([<Header key={`header-${i}`} number={i} />, <Band index={i} key={`band-${i}`} band={band} />])
   });
   return (<div className="BandList">{bandListNode}</div>);
-}
+});
 
 class App extends Component {
   constructor(props){
@@ -55,8 +55,12 @@ class App extends Component {
       [key]: event.target.value
     });
   }
+  onSortEnd = ({oldIndex, newIndex}) => {
+    this.setState({
+            data: arrayMove(this.state.data, oldIndex, newIndex),
+    });
+  };
   handleSubmit(event){
-    console.log(this.state.name);
     let data = this.state.data;
     data.push({
       name: this.state.name,
@@ -99,7 +103,7 @@ class App extends Component {
             <input className="btn btn-default" type="submit" value="Submit" />
           </div>
         </form>  
-          <BandList bands={this.state.data} />
+          <BandList bands={this.state.data} onSortEnd={this.onSortEnd} />
       </div>
     );
   }
