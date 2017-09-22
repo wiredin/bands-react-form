@@ -44,7 +44,7 @@ class App extends Component {
       state: '',
       bandcamp: '',
       soundcloud: '',
-      data: [{name: 'name', state: 'state'},{name: 'name2', state: 'state2'}]
+      data: [{name: 'name', state: 'state'},{name: 'name2', state: 'state2'  }]
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -62,10 +62,11 @@ class App extends Component {
   };
   handleSubmit(event){
     let data = this.state.data;
+    let bandcamp = this.state.bandcamp + (this.state.bandcamp ? ".bandcamp.com":"")
     data.push({
       name: this.state.name,
       state: this.state.state,
-      bandcamp: this.state.bandcamp + ".bandcamp.com",
+      bandcamp: bandcamp, 
       soundcloud: this.state.soundcloud
     });
     this.setState({data: data});
