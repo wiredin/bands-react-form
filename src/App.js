@@ -16,22 +16,23 @@ const Header = ({number}) => {
 
 }
 
-const Band = SortableElement(({band}) => {
+const Band = SortableElement(({band, onRemove, value}) => {
   return (
       <div className="Band">
+        <div><button className="Remove" onClick={() => onRemove(value)}>x</button></div>
         <ul>
           <li>{band.name}</li>
           <li>{band.state}</li>
-          <li><a href={`https://${band.bandcamp}`}>{band.bandcamp}</a></li>
+          <li><a href="{`https://${band.bandcamp}`}">{band.bandcamp}</a></li>
           <li>{band.soundcloud}</li>
         </ul>
       </div>
   );
 });
 
-const BandList = SortableContainer(({bands}) => {
+const BandList = SortableContainer(({bands, onRemove}) => {
   const bandListNode =  bands.map((band, i) => {
-    return ([<Header key={`header-${i}`} number={i} />, <Band index={i} key={`band-${i}`} band={band} />])
+    return ([<Header key={`header-${i}`} number={i} />, <Band index={i} key={`band-${i}`} value={i} band={band} onRemove={onRemove}/>])
   });
   return (<div className="BandList">{bandListNode}</div>);
 });
@@ -48,6 +49,7 @@ class App extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
   }
   handleChange(event){
     const key = event.target.id;
@@ -71,6 +73,14 @@ class App extends Component {
     });
     this.setState({data: data});
     event.preventDefault();
+  }
+  handleRemove(index){
+    console.log("hi");
+    const key = index;
+    console.log(key);
+    let data = this.state.data;
+    data.splice(key,1);
+    this.setState({data: data});
   }
   render() {
     return (
@@ -104,7 +114,7 @@ class App extends Component {
             <input className="btn btn-default" type="submit" value="Submit" />
           </div>
         </form>  
-          <BandList bands={this.state.data} onSortEnd={this.onSortEnd} />
+          <BandList bands={this.state.data} onSortEnd={this.onSortEnd} onRemove={this.handleRemove} />
       </div>
     );
   }

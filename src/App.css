@@ -36,3 +36,11 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.Remove{
+  float:right;
+  color: #337ab7;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
