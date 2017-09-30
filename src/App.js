@@ -16,6 +16,22 @@ const Header = ({number}) => {
 
 }
 
+const Bandcamp = ({bandcamp}) => {
+  if (bandcamp) {
+    return <li><a href={`https://${bandcamp}.bandcamp.com`}>{`${bandcamp}.bandcamp.com`}</a></li>;
+  }
+  return <li></li>;
+};
+
+
+const Soundcloud = ({soundcloud}) => {
+  if (soundcloud) {
+    return <li><a href={`https://soundcloud.com/${soundcloud}`}>{`soundcloud.com/${soundcloud}`}</a></li>;
+  }
+  return <li></li>;
+};
+
+
 const Band = SortableElement(({band, onRemove, value}) => {
   return (
       <div className="Band">
@@ -23,8 +39,8 @@ const Band = SortableElement(({band, onRemove, value}) => {
         <ul>
           <li>{band.name}</li>
           <li>{band.state}</li>
-          <li><a href={`https://${band.bandcamp}`}>{band.bandcamp}</a></li>
-          <li>{band.soundcloud}</li>
+          <Bandcamp bandcamp={band.bandcamp}/>
+          <Soundcloud soundcloud={band.soundcloud}/>
         </ul>
       </div>
   );
@@ -64,11 +80,10 @@ class App extends Component {
   };
   handleSubmit(event){
     let data = this.state.data;
-    let bandcamp = this.state.bandcamp + (this.state.bandcamp ? ".bandcamp.com":"")
     data.push({
       name: this.state.name,
       state: this.state.state,
-      bandcamp: bandcamp, 
+      bandcamp: this.state.bandcamp, 
       soundcloud: this.state.soundcloud
     });
     this.setState({data: data});
