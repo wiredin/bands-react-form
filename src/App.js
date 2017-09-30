@@ -23,7 +23,7 @@ const Band = SortableElement(({band, onRemove, value}) => {
         <ul>
           <li>{band.name}</li>
           <li>{band.state}</li>
-          <li><a href="{`https://${band.bandcamp}`}">{band.bandcamp}</a></li>
+          <li><a href={`https://${band.bandcamp}`}>{band.bandcamp}</a></li>
           <li>{band.soundcloud}</li>
         </ul>
       </div>
