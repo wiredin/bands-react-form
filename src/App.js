@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
+import Location from  'react-select';
+import 'react-select/dist/react-select.css';
+
+
 
 const Header = ({number}) => {
   let title = null;
@@ -53,6 +57,13 @@ const BandList = SortableContainer(({bands, onRemove}) => {
   return (<div className="BandList">{bandListNode}</div>);
 });
 
+
+const options = [ 
+  { value: 'NJ', label: 'New Jersey' },
+  { value: 'NY', label: 'New York' }
+];
+
+
 class App extends Component {
   constructor(props){
     super(props);
@@ -66,6 +77,7 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
+    this.handleLocation = this.handleLocation.bind(this);
   }
   handleChange(event){
     const key = event.target.id;
@@ -97,6 +109,12 @@ class App extends Component {
     data.splice(key,1);
     this.setState({data: data});
   }
+ 
+  handleLocation(val) {
+    console.log("Selected: " + JSON.stringify(val));
+    this.setState({state: val.value});
+  }
+
   render() {
     return (
       <div className="Bands">
@@ -106,10 +124,13 @@ class App extends Component {
               <input type="text" className="form-control" placeholder="band name" id="name" value={this.state.name} onChange={this.handleChange} />
             </div>
           <div className="form-group">
-            <label htmlFor="state" className="control sr-only">
-              State:
-            </label>
-              <input type="text" className="form-control" placeholder="state" id="state" value={this.state.state} onChange={this.handleChange} />
+            <label htmlFor="state" className="control sr-only">State:</label>
+            <Location 
+              name="location"
+              value={this.state.state}
+              options={options}
+              onChange={this.handleLocation} 
+            />
           </div>
           <div className="form-group">
             <label htmlFor="bandcamp" className="control sr-only">Bandcamp:</label>
@@ -126,7 +147,7 @@ class App extends Component {
               </div> 
           </div>
           <div className="form-group">
-            <input className="btn btn-default" type="submit" value="Submit" />
+            <input className="btn btn-default" type="submit" value="Add" />
           </div>
         </form>  
           <BandList bands={this.state.data} onSortEnd={this.onSortEnd} onRemove={this.handleRemove} />

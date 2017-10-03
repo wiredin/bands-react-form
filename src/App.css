@@ -28,6 +28,10 @@
   padding: 6px 6px 6px 12px;
 }
 
+.input-group .form-control {
+z-index:0;
+}
+
 .form-horizontal{
   width:300px; 
 }
