@@ -5,6 +5,7 @@ import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc'
 import Location from  'react-select';
 import 'react-select/dist/react-select.css';
 
+const LOCATIONS = require('../data/locations');
 
 
 const Header = ({number}) => {
@@ -58,10 +59,6 @@ const BandList = SortableContainer(({bands, onRemove}) => {
 });
 
 
-const options = [ 
-  { value: 'NJ', label: 'New Jersey' },
-  { value: 'NY', label: 'New York' }
-];
 
 
 class App extends Component {
@@ -72,6 +69,8 @@ class App extends Component {
       state: '',
       bandcamp: '',
       soundcloud: '',
+      selectLocation: 'US',
+      selectLabel: 'State',
       data: [{name: 'name', state: 'state'},{name: 'name2', state: 'state2'  }]
     };
     this.handleChange = this.handleChange.bind(this);
@@ -112,8 +111,21 @@ class App extends Component {
  
   handleLocation(val) {
     console.log("Selected: " + JSON.stringify(val));
-    this.setState({state: val.value});
+    if (val.value == 'INTL'){
+      this.setState({
+        selectLabel: "Country",
+        selectLocation: "INTL"
+      });
+    }else if (val.value == 'US'){
+      this.setState({
+        selectLabel: "State",
+        selectLocation: "US"
+      });
+    }else{
+      this.setState({state: val.value});
+    }
   }
+
 
   render() {
     return (
@@ -127,12 +139,13 @@ class App extends Component {
             <label htmlFor="state" className="control sr-only">State:</label>
             <Location 
               name="location"
+              placeholder={this.state.selectLabel}
               value={this.state.state}
-              options={options}
+              options={LOCATIONS[this.state.selectLocation]}
               onChange={this.handleLocation} 
             />
           </div>
-          <div className="form-group">
+         <div className="form-group">
             <label htmlFor="bandcamp" className="control sr-only">Bandcamp:</label>
               <div className="input-group">
                 <input type="text" className="form-control" placeholder="blackblahblah" id="bandcamp" value={this.state.bandcamp} onChange={this.handleChange} />
