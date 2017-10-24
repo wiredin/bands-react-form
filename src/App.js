@@ -114,12 +114,14 @@ class App extends Component {
     if (val.value == 'INTL'){
       this.setState({
         selectLabel: "Country",
-        selectLocation: "INTL"
+        selectLocation: "INTL",
+        state: null
       });
     }else if (val.value == 'US'){
       this.setState({
         selectLabel: "State",
-        selectLocation: "US"
+        selectLocation: "US",
+        state: null
       });
     }else{
       this.setState({state: val.value});
