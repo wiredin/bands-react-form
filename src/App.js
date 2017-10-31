@@ -4,7 +4,7 @@ import './App.css';
 import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
 import Location from  'react-select';
 import 'react-select/dist/react-select.css';
-
+import BandLocationSelect from './bandLocationSelect.js';
 const LOCATIONS = require('../data/locations');
 
 
@@ -139,13 +139,17 @@ class App extends Component {
             </div>
           <div className="form-group">
             <label htmlFor="state" className="control sr-only">State:</label>
+            <BandLocationSelect
+              value={this.state.state}
+            />
+            {/* 
             <Location 
               name="location"
               placeholder={this.state.selectLabel}
               value={this.state.state}
               options={LOCATIONS[this.state.selectLocation]}
               onChange={this.handleLocation} 
-            />
+            />*/}
           </div>
          <div className="form-group">
             <label htmlFor="bandcamp" className="control sr-only">Bandcamp:</label>
