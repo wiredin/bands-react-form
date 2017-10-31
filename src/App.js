@@ -69,8 +69,6 @@ class App extends Component {
       state: '',
       bandcamp: '',
       soundcloud: '',
-      selectLocation: 'US',
-      selectLabel: 'State',
       data: [{name: 'name', state: 'state'},{name: 'name2', state: 'state2'  }]
     };
     this.handleChange = this.handleChange.bind(this);
@@ -109,23 +107,8 @@ class App extends Component {
     this.setState({data: data});
   }
  
-  handleLocation(val) {
-    console.log("Selected: " + JSON.stringify(val));
-    if (val.value == 'INTL'){
-      this.setState({
-        selectLabel: "Country",
-        selectLocation: "INTL",
-        state: null
-      });
-    }else if (val.value == 'US'){
-      this.setState({
-        selectLabel: "State",
-        selectLocation: "US",
-        state: null
-      });
-    }else{
-      this.setState({state: val.value});
-    }
+  handleLocation(loc) {
+      this.setState({state: loc});
   }
 
 
@@ -141,15 +124,8 @@ class App extends Component {
             <label htmlFor="state" className="control sr-only">State:</label>
             <BandLocationSelect
               value={this.state.state}
+              onLocationChange={this.handleLocation}
             />
-            {/* 
-            <Location 
-              name="location"
-              placeholder={this.state.selectLabel}
-              value={this.state.state}
-              options={LOCATIONS[this.state.selectLocation]}
-              onChange={this.handleLocation} 
-            />*/}
           </div>
          <div className="form-group">
             <label htmlFor="bandcamp" className="control sr-only">Bandcamp:</label>

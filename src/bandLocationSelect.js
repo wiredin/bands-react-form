@@ -28,7 +28,7 @@ class BandLocationSelect extends Component{
         state: null
       });
     }else{
-      this.setState({state: val.value});
+      this.props.onLocationChange(val.value);
     }
   }
 
