@@ -56,6 +56,7 @@ exports.US= [
 
 exports.INTL = [
 
+{label: "United States", value: "USA"},
 {label: "Afghanistan", value: "AFG"},
 {label: "Aland Islands", value: "ALA"},
 {label: "Albania", value: "ALB"},
@@ -291,7 +292,7 @@ exports.INTL = [
 {label: "Ukraine", value: "UKR"},
 {label: "United Arab Emirates", value: "ARE"},
 {label: "United Kingdom of Great Britain and Northern Ireland", value: "GBR"},
-{label: "United States of America", value: "USA"},
+{label: "United States", value: "USA"},
 {label: "United States Minor Outlying Islands", value: "UMI"},
 {label: "Uruguay", value: "URY"},
 {label: "Uzbekistan", value: "UZB"},

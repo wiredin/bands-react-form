@@ -58,7 +58,13 @@ const BandList = SortableContainer(({bands, onRemove}) => {
   return (<div className="BandList">{bandListNode}</div>);
 });
 
-
+function validationClasses(error){
+  var className = 'form-group';
+  if (error){
+    className = className.concat(" has-error");
+  }
+  return className;
+}
 
 
 class App extends Component {
@@ -69,7 +75,8 @@ class App extends Component {
       state: '',
       bandcamp: '',
       soundcloud: '',
-      data: [{name: 'name', state: 'state'},{name: 'name2', state: 'state2'  }]
+      data: [{name: 'name', state: 'state'},{name: 'name2', state: 'state2'  }],
+      errors: {name: false, state: false}
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -82,22 +89,45 @@ class App extends Component {
       [key]: event.target.value
     });
   }
+
   onSortEnd = ({oldIndex, newIndex}) => {
     this.setState({
             data: arrayMove(this.state.data, oldIndex, newIndex),
     });
   };
+  
+  valid(){
+    let errors = this.state.errors;
+    let valid = true;
+    for (const input in errors){
+      console.log(this.state[input]);
+      if (this.state[input]){
+        errors[input]=false;
+        this.setState({errors: errors});
+      }else{
+        errors[input]=true;
+        this.setState({errors: errors});
+        valid = false;
+      }
+    }
+    console.log(errors);
+    return valid;
+  }
+
   handleSubmit(event){
-    let data = this.state.data;
-    data.push({
-      name: this.state.name,
-      state: this.state.state,
-      bandcamp: this.state.bandcamp, 
-      soundcloud: this.state.soundcloud
-    });
-    this.setState({data: data});
+    if (this.valid()) {
+      let data = this.state.data;
+      data.push({
+        name: this.state.name,
+        state: this.state.state,
+        bandcamp: this.state.bandcamp, 
+        soundcloud: this.state.soundcloud
+      });
+      this.setState({data: data});
+    }
     event.preventDefault();
   }
+
   handleRemove(index){
     console.log("hi");
     const key = index;
@@ -111,12 +141,11 @@ class App extends Component {
       this.setState({state: loc});
   }
 
-
-  render() {
+    render() {
     return (
       <div className="Bands">
         <form onSubmit={this.handleSubmit} className="form-horizontal">
-          <div className="form-group">
+          <div className={validationClasses(this.state.errors["name"])}>
             <label htmlFor="name" className="control sr-only sr-only"> Band Name:</label>
               <input type="text" className="form-control" placeholder="band name" id="name" value={this.state.name} onChange={this.handleChange} />
             </div>
@@ -142,7 +171,7 @@ class App extends Component {
               </div> 
           </div>
           <div className="form-group">
-            <input className="btn btn-default" type="submit" value="Add" />
+            <input className="btn btn-default"  type="submit" value="Add" />
           </div>
         </form>  
           <BandList bands={this.state.data} onSortEnd={this.onSortEnd} onRemove={this.handleRemove} />
