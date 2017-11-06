@@ -35,6 +35,9 @@ z-index:0;
 .form-horizontal{
   width:300px; 
 }
+.has-error .Select-control{
+  border-color: #a94442;
+}
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }

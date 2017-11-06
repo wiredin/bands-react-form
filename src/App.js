@@ -23,7 +23,7 @@ const Header = ({number}) => {
 
 const Bandcamp = ({bandcamp}) => {
   if (bandcamp) {
-    return <li><a href={`https://${bandcamp}.bandcamp.com`}>{`${bandcamp}.bandcamp.com`}</a></li>;
+    return <li><a target="_blank" href={`https://${bandcamp}.bandcamp.com`}>{`${bandcamp}.bandcamp.com`}</a></li>;
   }
   return <li></li>;
 };
@@ -43,7 +43,7 @@ const Band = SortableElement(({band, onRemove, value}) => {
         <div><button className="Remove" onClick={() => onRemove(value)}>x</button></div>
         <ul>
           <li>{band.name}</li>
-          <li>{band.state}</li>
+          <li>{locationName(band.state)}</li>
           <Bandcamp bandcamp={band.bandcamp}/>
           <Soundcloud soundcloud={band.soundcloud}/>
         </ul>
@@ -66,6 +66,14 @@ function validationClasses(error){
   return className;
 }
 
+function locationName(loc){
+  console.log(LOCATIONS["US"].find(x => x.value === loc));
+  if(loc.length > 2){
+    return LOCATIONS["INTL"].find(x => x.value === loc).label;
+  }else{
+    return LOCATIONS["US"].find(x => x.value === loc).label;
+  }
+}
 
 class App extends Component {
   constructor(props){
@@ -75,7 +83,7 @@ class App extends Component {
       state: '',
       bandcamp: '',
       soundcloud: '',
-      data: [{name: 'name', state: 'state'},{name: 'name2', state: 'state2'  }],
+      data: [{name: 'Pile', state: 'NJ', bandcamp: 'pile'}],
       errors: {name: false, state: false}
     };
     this.handleChange = this.handleChange.bind(this);
@@ -100,7 +108,6 @@ class App extends Component {
     let errors = this.state.errors;
     let valid = true;
     for (const input in errors){
-      console.log(this.state[input]);
       if (this.state[input]){
         errors[input]=false;
         this.setState({errors: errors});
@@ -110,7 +117,6 @@ class App extends Component {
         valid = false;
       }
     }
-    console.log(errors);
     return valid;
   }
 
@@ -124,9 +130,20 @@ class App extends Component {
         soundcloud: this.state.soundcloud
       });
       this.setState({data: data});
+      this.clearInput();
     }
     event.preventDefault();
   }
+
+  clearInput(){
+    this.setState({
+      name: '',
+      state: '',
+      bandcamp: '',
+      soundcloud: ''
+    });
+  }
+
 
   handleRemove(index){
     console.log("hi");
@@ -149,7 +166,7 @@ class App extends Component {
             <label htmlFor="name" className="control sr-only sr-only"> Band Name:</label>
               <input type="text" className="form-control" placeholder="band name" id="name" value={this.state.name} onChange={this.handleChange} />
             </div>
-          <div className="form-group">
+          <div className={validationClasses(this.state.errors["state"])}>
             <label htmlFor="state" className="control sr-only">State:</label>
             <BandLocationSelect
               value={this.state.state}
@@ -174,7 +191,7 @@ class App extends Component {
             <input className="btn btn-default"  type="submit" value="Add" />
           </div>
         </form>  
-          <BandList bands={this.state.data} onSortEnd={this.onSortEnd} onRemove={this.handleRemove} />
+          <BandList bands={this.state.data} onSortEnd={this.onSortEnd} onRemove={this.handleRemove} distance={1}/>
       </div>
     );
   }
