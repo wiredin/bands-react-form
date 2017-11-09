@@ -31,7 +31,7 @@ const Bandcamp = ({bandcamp}) => {
 
 const Soundcloud = ({soundcloud}) => {
   if (soundcloud) {
-    return <li><a href={`https://soundcloud.com/${soundcloud}`}>{`soundcloud.com/${soundcloud}`}</a></li>;
+    return <li><a target="_blank" href={`https://soundcloud.com/${soundcloud}`}>{`soundcloud.com/${truncate(soundcloud,30)}`}</a></li>;
   }
   return <li></li>;
 };
@@ -75,6 +75,10 @@ function locationName(loc){
   }
 }
 
+function truncate(str, max) {
+    return str.length > max ? str.substr(0, max-1) + '…' : str;
+}
+
 class App extends Component {
   constructor(props){
     super(props);
@@ -83,7 +87,7 @@ class App extends Component {
       state: '',
       bandcamp: '',
       soundcloud: '',
-      data: [{name: 'Pile', state: 'NJ', bandcamp: 'pile'}],
+      data: [{name: 'Pile', state: 'NJ', bandcamp: 'pile', soundcloud: 'explodinginsoundrecords/pile-texas'}],
       errors: {name: false, state: false}
     };
     this.handleChange = this.handleChange.bind(this);
@@ -191,7 +195,7 @@ class App extends Component {
             <input className="btn btn-default"  type="submit" value="Add" />
           </div>
         </form>  
-          <BandList bands={this.state.data} onSortEnd={this.onSortEnd} onRemove={this.handleRemove} distance={1}/>
+          <BandList bands={this.state.data} onSortEnd={this.onSortEnd} onRemove={this.handleRemove} pressDelay={1}/>
       </div>
     );
   }

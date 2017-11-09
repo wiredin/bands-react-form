@@ -24,7 +24,7 @@ class BandLocationSelect extends Component{
     }else if (val.value == 'USA'){
       this.setState({
         selectLabel: "State",
-        selectLocation: "USA",
+        selectLocation: "US",
         state: null
       });
     }else{
