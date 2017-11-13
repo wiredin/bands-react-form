@@ -11,9 +11,9 @@ const LOCATIONS = require('../data/locations');
 const Header = ({number}) => {
   let title = null;
   if (number===0) {
-    title = <h4> Headliner </h4>;
+    title = <h5> Headliner </h5>;
   }else{
-    title = <h4>Band #{number+1}</h4>;
+    title = <h5>Band #{number+1}</h5>;
   }
   return(
       <div className="Header">{title}</div>
@@ -165,10 +165,10 @@ class App extends Component {
     render() {
     return (
       <div className="Bands">
-        <form onSubmit={this.handleSubmit} className="form-horizontal">
+        <form onSubmit={this.handleSubmit} >
           <div className={validationClasses(this.state.errors["name"])}>
             <label htmlFor="name" className="control sr-only sr-only"> Band Name:</label>
-              <input type="text" className="form-control" placeholder="band name" id="name" value={this.state.name} onChange={this.handleChange} />
+              <input type="text" className="form-control form-control-sm" placeholder="band name" id="name" value={this.state.name} onChange={this.handleChange} />
             </div>
           <div className={validationClasses(this.state.errors["state"])}>
             <label htmlFor="state" className="control sr-only">State:</label>
@@ -178,21 +178,14 @@ class App extends Component {
             />
           </div>
          <div className="form-group">
-            <label htmlFor="bandcamp" className="control sr-only">Bandcamp:</label>
-              <div className="input-group">
-                <input type="text" className="form-control" placeholder="blackblahblah" id="bandcamp" value={this.state.bandcamp} onChange={this.handleChange} />
-                <div className="input-group-addon">.bandcamp.com</div>
-              </div>
+                <input type="text" className="form-control form-control-sm" placeholder="Bandcamp (optional)" id="bandcamp" value={this.state.bandcamp} onChange={this.handleChange} />
           </div>
           <div className="form-group">
             <label htmlFor="soundcloud" className="control sr-only"> Soundcloud:</label>
-              <div className="input-group">
-                <div className="input-group-addon">soundcloud.com/</div>
-                <input type="text" className="form-control" placeholder="blahblahblah" id="soundcloud" value={this.state.soundcloud} onChange={this.handleChange} />
-              </div> 
+                <input type="text" className="form-control form-control-sm" placeholder="Soundcloud (optional)" id="soundcloud" value={this.state.soundcloud} onChange={this.handleChange} />
           </div>
           <div className="form-group">
-            <input className="btn btn-default"  type="submit" value="Add" />
+            <input className="btn btn-secondary btn-sm"  type="submit" value="Add" />
           </div>
         </form>  
           <BandList bands={this.state.data} onSortEnd={this.onSortEnd} onRemove={this.handleRemove} pressDelay={1}/>
