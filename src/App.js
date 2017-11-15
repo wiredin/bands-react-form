@@ -20,7 +20,19 @@ const Header = ({number}) => {
       <div className="Header">{title}</div>
   );
 
-}
+};
+
+const HiddenInput =  ({number, band}) => {
+  
+  return(
+    <div>
+      <input type="hidden" name={`show[bands_attribute][${number}][name]`} id={`show_bands_attributes_${number}_name`} value={band.name} />
+      <input type="hidden" name={`show[bands_attribute][${number}][state]`} id={`show_bands_attributes_${number}_state`} value={band.state} />
+      <input type="hidden" name={`show[bands_attribute][${number}][bandcamp]`} id={`show_bands_attributes_${number}_bandcamp`} value={band.bandcamp} />
+      <input type="hidden" name={`show[bands_attribute][${number}][soundcloud]`} id={`show_bands_attributes_${number}_soundcloud`} value={band.soundcloud} />
+    </div> 
+  )
+};
 
 const Bandcamp = ({bandcamp}) => {
   if (bandcamp) {
@@ -53,9 +65,10 @@ const Band = SortableElement(({band, onRemove, value}) => {
   );
 });
 
+
 const BandList = SortableContainer(({bands, onRemove}) => {
   const bandListNode =  bands.map((band, i) => {
-    return ([<Header key={`header-${i}`} number={i} />, <Band index={i} key={`band-${i}`} value={i} band={band} onRemove={onRemove}/>])
+    return ([<Header key={`header-${i}`} number={i} />, <Band index={i} key={`band-${i}`} value={i} band={band} onRemove={onRemove}/>, <HiddenInput key={`input-${i}`} number={i} band={band} />])
   });
   return (<div className="BandList">{bandListNode}</div>);
 });
