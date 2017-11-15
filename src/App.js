@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
+import {SortableContainer, SortableElement, SortableHandle, arrayMove} from 'react-sortable-hoc';
 import Location from  'react-select';
 import './react-select.css';
 import BandLocationSelect from './bandLocationSelect.js';
 const LOCATIONS = require('../data/locations');
 
+const DragHandle = SortableHandle(() => <div className="drag-handle"></div>);
 
 const Header = ({number}) => {
   let title = null;
@@ -41,8 +42,9 @@ const Band = SortableElement(({band, onRemove, value}) => {
   return (
       <div className="Band">
         <div><button className="Remove" onClick={() => onRemove(value)}>x</button></div>
-        <ul>
-          <li>{band.name}</li>
+        <DragHandle />
+        <ul className="band-content">
+          <li className="band-name">{band.name}</li>
           <li>{locationName(band.state)}</li>
           <Bandcamp bandcamp={band.bandcamp}/>
           <Soundcloud soundcloud={band.soundcloud}/>
@@ -95,6 +97,7 @@ class App extends Component {
     this.handleRemove = this.handleRemove.bind(this);
     this.handleLocation = this.handleLocation.bind(this);
   }
+
   handleChange(event){
     const key = event.target.id;
     this.setState({
@@ -102,7 +105,7 @@ class App extends Component {
     });
   }
 
-  onSortEnd = ({oldIndex, newIndex}) => {
+   onSortEnd = ({oldIndex, newIndex}) => {
     this.setState({
             data: arrayMove(this.state.data, oldIndex, newIndex),
     });
@@ -186,7 +189,7 @@ class App extends Component {
           <div className="form-group">
             <input className="btn btn-secondary btn-sm" onClick={this.handleSubmit}  type="submit" value="Add" />
           </div>
-          <BandList bands={this.state.data} onSortEnd={this.onSortEnd} onRemove={this.handleRemove} pressDelay={1}/>
+          <BandList bands={this.state.data} onSortEnd={this.onSortEnd} onRemove={this.handleRemove} useDragHandle={true}/>
       </div>
     );
   }
