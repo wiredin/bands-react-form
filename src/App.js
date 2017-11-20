@@ -94,6 +94,26 @@ function truncate(str, max) {
     return str.length > max ? str.substr(0, max-1) + '…' : str;
 }
 
+function validBandcamp(value){
+    const re = /(([A-Za-z0-9\-]+)\.bandcamp\.com)/;
+    const match = value.match(re);
+    if(match){
+      return match[2];
+    }else{
+      return '';
+    }
+}
+
+function validSoundcloud(value){
+    const re = /(soundcloud\.com)\/([A-Za-z0-9\-]+)/;
+    const match = value.match(re);
+    if(match){
+      return match[2];
+    }else{
+      return '';
+    }
+}
+
 class App extends Component {
   constructor(props){
     super(props);
@@ -103,7 +123,7 @@ class App extends Component {
       bandcamp: '',
       soundcloud: '',
       data: [{name: 'Pile', state: 'NJ', bandcamp: 'pile', soundcloud: 'explodinginsoundrecords/pile-texas'}],
-      errors: {name: false, state: false, bandcamp: false}
+      errors: {name: false, state: false, bandcamp: false, soundcloud: false}
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -141,28 +161,24 @@ class App extends Component {
       errors.state = false;
     }
 
-    if (this.state.bandcamp && !this.validBandcamp(this.state.bandcamp)){
+    if (this.state.bandcamp && !validBandcamp(this.state.bandcamp)){
       errors.bandcamp = true;
       valid = false;
     }else{
       errors.bandcamp = false;
+    }
+    
+    if (this.state.soundcloud && !validSoundcloud(this.state.soundcloud)){
+      errors.soundcloud = true;
+      valid = false;
+    }else{
+      errors.soundcloud = false;
     }
   
     this.setState({errors: errors});
     return valid;
   }
 
- 
-  validBandcamp(value){
-    const re = /(([A-Za-z0-9\-]+)\.bandcamp\.com)/;
-    const match = value.match(re);
-    if(match){
-      console.log(match);
-      return match;
-    }else{
-      return match;
-    }
-  }
 
   handleSubmit(event){
     if (this.valid()) {
@@ -170,8 +186,8 @@ class App extends Component {
       data.push({
         name: this.state.name,
         state: this.state.state,
-        bandcamp: this.validBandcamp(this.state.bandcamp)[2], 
-        soundcloud: this.state.soundcloud
+        bandcamp: validBandcamp(this.state.bandcamp), 
+        soundcloud: validSoundcloud(this.state.soundcloud)
       });
       this.setState({data: data});
       this.clearInput();
@@ -219,9 +235,10 @@ class App extends Component {
             <input type="text" className="form-control form-control-sm" placeholder="Bandcamp (optional)" id="bandcamp" value={this.state.bandcamp} onChange={this.handleChange} />
             <small className="input-error">{(this.state.errors["bandcamp"]) ? "Not a valid bandcamp link" : ''}</small>
           </div>
-          <div className="form-group">
+          <div className={validationClasses(this.state.errors["soundcloud"])}>
             <label htmlFor="soundcloud" className="control sr-only"> Soundcloud:</label>
             <input type="text" className="form-control form-control-sm" placeholder="Soundcloud (optional)" id="soundcloud" value={this.state.soundcloud} onChange={this.handleChange} />
+            <small className="input-error">{(this.state.errors["soundcloud"]) ? "Not a valid soundcloud link" : ''}</small>
           </div>
           <div className="form-group">
             <input className="btn btn-secondary btn-sm" onClick={this.handleSubmit}  type="submit" value="Add" />

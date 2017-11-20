@@ -50,9 +50,6 @@ max-width:700px;
   padding: 6px 6px 6px 12px;
 }
 
-.input-group .form-control {
-z-index:0;
-}
 
 .form-horizontal{
   width:300px; 
@@ -68,8 +65,13 @@ z-index:0;
   border-color: #a94442;
 }
 
+
 .has-error .form-control{
   border-color: #a94442;
+}
+
+.has-error .form-control:focus{
+  box-shadow: 0 0 0 .2rem rgba(220,53,69,.25);
 }
 
 .input-error{
