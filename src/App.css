@@ -65,16 +65,16 @@ z-index:0;
 }
 
 .has-error .Select-control{
-border-color: #a94442;
+  border-color: #a94442;
 }
 
 .has-error .form-control{
   border-color: #a94442;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.input-error{
+  color: #a94442;
+
 }
 
 .Remove{

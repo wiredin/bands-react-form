@@ -5,6 +5,7 @@ import {SortableContainer, SortableElement, SortableHandle, arrayMove} from 'rea
 import Location from  'react-select';
 import './react-select.css';
 import BandLocationSelect from './bandLocationSelect.js';
+
 const LOCATIONS = require('../data/locations');
 
 const DragHandle = SortableHandle(() => <div className="drag-handle"></div>);
@@ -82,7 +83,6 @@ function validationClasses(error){
 }
 
 function locationName(loc){
-  console.log(LOCATIONS["US"].find(x => x.value === loc));
   if(loc.length > 2){
     return LOCATIONS["INTL"].find(x => x.value === loc).label;
   }else{
@@ -103,7 +103,7 @@ class App extends Component {
       bandcamp: '',
       soundcloud: '',
       data: [{name: 'Pile', state: 'NJ', bandcamp: 'pile', soundcloud: 'explodinginsoundrecords/pile-texas'}],
-      errors: {name: false, state: false}
+      errors: {name: false, state: false, bandcamp: false}
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -127,17 +127,41 @@ class App extends Component {
   valid(){
     let errors = this.state.errors;
     let valid = true;
-    for (const input in errors){
-      if (this.state[input]){
-        errors[input]=false;
-        this.setState({errors: errors});
-      }else{
-        errors[input]=true;
-        this.setState({errors: errors});
-        valid = false;
-      }
+    if (!this.state.name){
+      errors.name = true;
+      valid = false;
+    }else{
+      errors.name = false;
     }
+
+    if (!this.state.state){
+      errors.state = true;
+      valid = false;
+    }else{
+      errors.state = false;
+    }
+
+    if (this.state.bandcamp && !this.validBandcamp(this.state.bandcamp)){
+      errors.bandcamp = true;
+      valid = false;
+    }else{
+      errors.bandcamp = false;
+    }
+  
+    this.setState({errors: errors});
     return valid;
+  }
+
+ 
+  validBandcamp(value){
+    const re = /(([A-Za-z0-9\-]+)\.bandcamp\.com)/;
+    const match = value.match(re);
+    if(match){
+      console.log(match);
+      return match;
+    }else{
+      return match;
+    }
   }
 
   handleSubmit(event){
@@ -146,7 +170,7 @@ class App extends Component {
       data.push({
         name: this.state.name,
         state: this.state.state,
-        bandcamp: this.state.bandcamp, 
+        bandcamp: this.validBandcamp(this.state.bandcamp)[2], 
         soundcloud: this.state.soundcloud
       });
       this.setState({data: data});
@@ -166,9 +190,7 @@ class App extends Component {
 
 
   handleRemove(index){
-    console.log("hi");
     const key = index;
-    console.log(key);
     let data = this.state.data;
     data.splice(key,1);
     this.setState({data: data});
@@ -192,12 +214,14 @@ class App extends Component {
               onLocationChange={this.handleLocation}
             />
           </div>
-         <div className="form-group">
-                <input type="text" className="form-control form-control-sm" placeholder="Bandcamp (optional)" id="bandcamp" value={this.state.bandcamp} onChange={this.handleChange} />
+          <div className={validationClasses(this.state.errors["bandcamp"])}>
+            <label htmlFor="bandcamp" className="control sr-only"> Bandcamp:</label>
+            <input type="text" className="form-control form-control-sm" placeholder="Bandcamp (optional)" id="bandcamp" value={this.state.bandcamp} onChange={this.handleChange} />
+            <small className="input-error">{(this.state.errors["bandcamp"]) ? "Not a valid bandcamp link" : ''}</small>
           </div>
           <div className="form-group">
             <label htmlFor="soundcloud" className="control sr-only"> Soundcloud:</label>
-                <input type="text" className="form-control form-control-sm" placeholder="Soundcloud (optional)" id="soundcloud" value={this.state.soundcloud} onChange={this.handleChange} />
+            <input type="text" className="form-control form-control-sm" placeholder="Soundcloud (optional)" id="soundcloud" value={this.state.soundcloud} onChange={this.handleChange} />
           </div>
           <div className="form-group">
             <input className="btn btn-secondary btn-sm" onClick={this.handleSubmit}  type="submit" value="Add" />
