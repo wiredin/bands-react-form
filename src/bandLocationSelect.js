@@ -15,13 +15,13 @@ class BandLocationSelect extends Component{
 
   handleLocation(val) {
     console.log("Selected: " + JSON.stringify(val));
-    if (val.value == 'INTL'){
+    if (val.value === 'INTL'){
       this.setState({
         selectLabel: "Country",
         selectLocation: "INTL",
         state: null
       });
-    }else if (val.value == 'USA'){
+    }else if (val.value === 'USA'){
       this.setState({
         selectLabel: "State",
         selectLocation: "US",

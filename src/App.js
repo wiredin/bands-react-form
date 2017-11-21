@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import {SortableContainer, SortableElement, SortableHandle, arrayMove} from 'react-sortable-hoc';
-import Location from  'react-select';
 import './react-select.css';
 import BandLocationSelect from './bandLocationSelect.js';
 
@@ -95,7 +93,7 @@ function truncate(str, max) {
 }
 
 function validBandcamp(value){
-    const re = /(([A-Za-z0-9\-]+)\.bandcamp\.com)/;
+    const re = /(([A-Za-z0-9-]+)\.bandcamp\.com)/;
     const match = value.match(re);
     if(match){
       return match[2];
@@ -105,7 +103,7 @@ function validBandcamp(value){
 }
 
 function validSoundcloud(value){
-    const re = /(soundcloud\.com)\/([A-Za-z0-9\-]+)/;
+    const re = /(soundcloud\.com)\/([A-Za-z0-9-]+)/;
     const match = value.match(re);
     if(match){
       return match[2];
