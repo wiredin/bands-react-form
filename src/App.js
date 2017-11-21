@@ -221,7 +221,7 @@ class App extends Component {
       <div className="Bands">
           <div className={validationClasses(this.state.errors["name"])}>
             <label htmlFor="name" className="control sr-only sr-only"> Band Name:</label>
-              <input type="text" className="form-control form-control-sm" placeholder="band name" id="name" value={this.state.name} onChange={this.handleChange} />
+              <input type="text" className="form-control form-control-sm" placeholder="Band Name" id="name" value={this.state.name} onChange={this.handleChange} />
             </div>
           <div className={validationClasses(this.state.errors["state"])}>
             <label htmlFor="state" className="control sr-only">State:</label>
