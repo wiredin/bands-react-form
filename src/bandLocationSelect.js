@@ -42,6 +42,7 @@ class BandLocationSelect extends Component{
         options={LOCATIONS[this.state.selectLocation]}
         onChange={this.handleLocation} 
         className="select-sm"
+        clearable={false}
       />
     );
   }

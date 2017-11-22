@@ -7,7 +7,7 @@ max-width:700px;
 
 .band-content{
   position:relative;
-  top:-16px;
+  top:-81px;
   left:40px;
   width:80%;
 }
@@ -25,14 +25,20 @@ max-width:700px;
   background-color:white;
 }
 
-.drag-handle{
+.drag-handle-container{
   position: relative;
-  top: 30px;
+  top: 0px;
   left: 3px;
+  width: 22px;
+  height: 100%;
+}
+
+.drag-handle{
+  position:relative;
+  top:30px;
   width: 22px;
   height: 14px;
   background: linear-gradient(180deg,#6a6a6a,#6a6a6a 20%,#fff 0,#fff 40%,#6a6a6a 0,#6a6a6a 60%,#fff 0,#fff 80%,#6a6a6a 0,#6a6a6a);
-
 }
 
 .virtBand{

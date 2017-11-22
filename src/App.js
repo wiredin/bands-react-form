@@ -6,7 +6,7 @@ import BandLocationSelect from './bandLocationSelect.js';
 
 const LOCATIONS = require('../data/locations');
 
-const DragHandle = SortableHandle(() => <div className="drag-handle"></div>);
+const DragHandle = SortableHandle(() => <div className="drag-handle-container"><div className="drag-handle"></div></div>);
 
 const Header = ({number}) => {
   let title = null;
@@ -219,14 +219,16 @@ class App extends Component {
       <div className="Bands">
           <div className={validationClasses(this.state.errors["name"])}>
             <label htmlFor="name" className="control sr-only sr-only"> Band Name:</label>
-              <input type="text" className="form-control form-control-sm" placeholder="Band Name" id="name" value={this.state.name} onChange={this.handleChange} />
-            </div>
+            <input type="text" className="form-control form-control-sm" placeholder="Band Name" id="name" value={this.state.name} onChange={this.handleChange} />
+            <small className="input-error">{(this.state.errors["name"]) ? "Name cannot be blank" : ''}</small>
+          </div>
           <div className={validationClasses(this.state.errors["state"])}>
             <label htmlFor="state" className="control sr-only">State:</label>
             <BandLocationSelect
               value={this.state.state}
               onLocationChange={this.handleLocation}
             />
+            <small className="input-error">{(this.state.errors["state"]) ? "State/Country cannot be blank" : ''}</small>
           </div>
           <div className={validationClasses(this.state.errors["bandcamp"])}>
             <label htmlFor="bandcamp" className="control sr-only"> Bandcamp:</label>
