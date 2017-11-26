@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Select from  'react-select';
 
-const LOCATIONS = require('../data/locations');
+const LOCATIONS = require('./data/locations');
 
 class BandLocationSelect extends Component{
   constructor(props){

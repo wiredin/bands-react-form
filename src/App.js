@@ -4,7 +4,7 @@ import {SortableContainer, SortableElement, SortableHandle, arrayMove} from 'rea
 import './react-select.css';
 import BandLocationSelect from './bandLocationSelect.js';
 
-const LOCATIONS = require('../data/locations');
+const LOCATIONS = require('./data/locations');
 
 const DragHandle = SortableHandle(() => <div className="drag-handle-container"><div className="drag-handle"></div></div>);
 
@@ -140,7 +140,7 @@ class App extends Component {
     this.setState({
             data: arrayMove(this.state.data, oldIndex, newIndex),
     });
-  };
+   };
   
   valid(){
     let errors = this.state.errors;
