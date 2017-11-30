@@ -1,20 +1,18 @@
-.BandList{
-  margin-left: -14px;
-}
 
 .band-content{
+  font-size:13px;
   position:relative;
-  top:-81px;
+  top:-78px;
   left:40px;
   width:80%;
 }
 
 .band-name{
-  font-size:1rem;
+  font-size:16px;
+  font-weight:500;
 }
 
 .Band{
-  font-size:.85rem;
   margin: 4px 0 15px 0;
   border: dashed 1px #ccc;
   height:85px;
@@ -77,7 +75,7 @@
 
 .Remove{
   float:right;
-  color: #337ab7;
+  color: #333;
   background: none;
   border: none;
   cursor: pointer;

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import {SortableContainer, SortableElement, SortableHandle, arrayMove} from 'react-sortable-hoc';
-import './react-select.css';
 import BandLocationSelect from './bandLocationSelect.js';
+import 'react-select/dist/react-select.css';
 
 const LOCATIONS = require('./data/locations');
 
@@ -43,7 +43,7 @@ const Bandcamp = ({bandcamp}) => {
 
 const Soundcloud = ({soundcloud}) => {
   if (soundcloud) {
-    return <li><a target="_blank" href={`https://soundcloud.com/${soundcloud}`}>{`soundcloud.com/${truncate(soundcloud,30)}`}</a></li>;
+    return <li><a target="_blank" href={`https://soundcloud.com/${soundcloud}`}>{`soundcloud.com/${soundcloud}`}</a></li>;
   }
   return <li></li>;
 };
@@ -219,7 +219,7 @@ class App extends Component {
       <div className="Bands">
           <div className={validationClasses(this.state.errors["name"])}>
             <label htmlFor="name" className="control sr-only sr-only"> Band Name:</label>
-            <input type="text" className="form-control form-control-sm" placeholder="Band Name" id="name" value={this.state.name} onChange={this.handleChange} />
+            <input type="text" className="form-control" placeholder="Band Name" id="name" value={this.state.name} onChange={this.handleChange} />
             <small className="input-error">{(this.state.errors["name"]) ? "Name cannot be blank" : ''}</small>
           </div>
           <div className={validationClasses(this.state.errors["state"])}>
@@ -232,12 +232,12 @@ class App extends Component {
           </div>
           <div className={validationClasses(this.state.errors["bandcamp"])}>
             <label htmlFor="bandcamp" className="control sr-only"> Bandcamp:</label>
-            <input type="text" className="form-control form-control-sm" placeholder="Bandcamp (optional)" id="bandcamp" value={this.state.bandcamp} onChange={this.handleChange} />
+            <input type="text" className="form-control" placeholder="Bandcamp (optional)" id="bandcamp" value={this.state.bandcamp} onChange={this.handleChange} />
             <small className="input-error">{(this.state.errors["bandcamp"]) ? "Not a valid bandcamp link" : ''}</small>
           </div>
           <div className={validationClasses(this.state.errors["soundcloud"])}>
             <label htmlFor="soundcloud" className="control sr-only"> Soundcloud:</label>
-            <input type="text" className="form-control form-control-sm" placeholder="Soundcloud (optional)" id="soundcloud" value={this.state.soundcloud} onChange={this.handleChange} />
+            <input type="text" className="form-control" placeholder="Soundcloud (optional)" id="soundcloud" value={this.state.soundcloud} onChange={this.handleChange} />
             <small className="input-error">{(this.state.errors["soundcloud"]) ? "Not a valid soundcloud link" : ''}</small>
           </div>
           <div className="form-group">
