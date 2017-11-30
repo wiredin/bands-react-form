@@ -11,9 +11,9 @@ const DragHandle = SortableHandle(() => <div className="drag-handle-container"><
 const Header = ({number}) => {
   let title = null;
   if (number===0) {
-    title = <h5> Headliner </h5>;
+    title = <h4> Headliner </h4>;
   }else{
-    title = <h5>Band #{number+1}</h5>;
+    title = <h4>Band #{number+1}</h4>;
   }
   return(
       <div className="Header">{title}</div>
@@ -241,7 +241,7 @@ class App extends Component {
             <small className="input-error">{(this.state.errors["soundcloud"]) ? "Not a valid soundcloud link" : ''}</small>
           </div>
           <div className="form-group">
-            <input className="btn btn-secondary btn-sm" onClick={this.handleSubmit}  type="submit" value="Add" />
+            <input className="btn btn-default" onClick={this.handleSubmit}  type="submit" value="Add" />
           </div>
           <BandList bands={this.state.data} onSortEnd={this.onSortEnd} onRemove={this.handleRemove} useDragHandle={true}/>
       </div>
