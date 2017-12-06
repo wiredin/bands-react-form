@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Bands from './Bands';
 import './index.css';
 
 ReactDOM.render(
-  <App />,
+  <Bands />,
   document.getElementById('root')
 );

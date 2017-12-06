@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './Bands.css';
 import {SortableContainer, SortableElement, SortableHandle, arrayMove} from 'react-sortable-hoc';
 import BandLocationSelect from './bandLocationSelect.js';
 import 'react-select/dist/react-select.css';
